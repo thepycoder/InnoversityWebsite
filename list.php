@@ -130,9 +130,13 @@ if ($conn->connect_error) {
                                             echo "<td>" . $row["faculty"] . "</td>";
                                             echo "<td>" . $row["adress"] . "</td>";
                                             $percent1 = round(($row["ppres"] / $row["pcap"])*100,0);
-                                            $percent2 = round(($row["cpres"] / $row["ccap"])*100,0);
                                             echo '<td><div class="progress progress-striped active"><div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="'.$percent1.'" aria-valuemin="0" aria-valuemax="100" style="width: '.$percent1.'%"><span class="show"><i class="fa fa-user fa-fw"></i>'.$row["ppres"].' / '.$row["pcap"].'</span></div></td>';
-                                            echo '<td><div class="progress progress-striped active"><div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="'.$percent2.'" aria-valuemin="0" aria-valuemax="100" style="width: '.$percent2.'%"><span class="show"><i class="fa fa-desktop fa-fw"></i>'.$row["cpres"].' / '.$row["ccap"].'</span></div></td>';
+                                            if ($row["ccap"] > 0) {
+                                                $percent2 = round(($row["cpres"] / $row["ccap"])*100,0);
+                                                echo '<td><div class="progress progress-striped active"><div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="'.$percent2.'" aria-valuemin="0" aria-valuemax="100" style="width: '.$percent2.'%"><span class="show"><i class="fa fa-desktop fa-fw"></i>'.$row["cpres"].' / '.$row["ccap"].'</span></div></td>';
+                                            } else {
+                                                echo "<td>no pc's</td>";
+                                            }
                                             echo "</tr>";
                                         }
                                     } else {
