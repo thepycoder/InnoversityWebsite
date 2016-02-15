@@ -1,3 +1,27 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "inno";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT adress FROM locations";
+$result = $conn->query($sql);
+$locations = "";
+if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+      $locations .= "'" . $row["adress"] . " Ghent Belgium'" . ",";
+    }
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,6 +46,9 @@
 
     <!-- Custom Fonts -->
     <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom map style -->
+    <link rel="stylesheet" href="css/custom.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -98,7 +125,7 @@
                       <h1>Map overview</h1>
                       <div class="panel panel-default" style="height:100%">
                         <div class="panel-body">
-                          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d160409.78401404055!2d3.574399875608456!3d51.08257203741556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c370e1339443ad%3A0x40099ab2f4d5140!2sGhent!5e0!3m2!1sen!2sbe!4v1455290183272" width="100%" height="500px" frameborder="0" style="border:0" allowfullscreen></iframe>
+                          <div id="map_canvas"></div>
                         </div>
                       </div>
                     <!-- /.col-lg-12 -->
@@ -124,6 +151,40 @@
     <!-- Custom Theme JavaScript -->
     <script src="dist/js/sb-admin-2.js"></script>
 
+    <!-- Custom Google Map -->
+    <script>
+    $(document).ready(function () {
+      var map;
+      var elevator;
+      var myOptions = {
+          zoom: 14,
+          center: new google.maps.LatLng(51.056604, 3.719974),
+          mapTypeId: 'terrain'
+      };
+      map = new google.maps.Map($('#map_canvas')[0], myOptions);
+
+      var addresses = [<?php echo $locations; ?>];
+
+      for (var x = 0; x < addresses.length; x++) {
+          $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+addresses[x]+'&sensor=false', null, function (data) {
+              var p = data.results[0].geometry.location
+              var latlng = new google.maps.LatLng(p.lat, p.lng);
+              new google.maps.Marker({
+                  position: latlng,
+                  map: map
+              });
+
+          });
+      }
+
+    });
+    </script>
+
+    <script src="http://maps.google.com/maps/api/js?sensor=false&.js"></script>
+
 </body>
 
 </html>
+<?php
+$conn->close();
+?>
