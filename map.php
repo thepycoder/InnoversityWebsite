@@ -169,10 +169,18 @@ if ($result->num_rows > 0) {
           $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+addresses[x]+'&sensor=false', null, function (data) {
               var p = data.results[0].geometry.location
               var latlng = new google.maps.LatLng(p.lat, p.lng);
-              new google.maps.Marker({
+              var marker = new google.maps.Marker({
                   position: latlng,
                   map: map
+
               });
+              var info = new google.maps.InfoWindow({
+                 content: addresses[x]
+              });
+
+              google.maps.event.addListener(marker, 'click ', function(){
+                                           marker.info.open(map,marker);
+              })
 
           });
       }
