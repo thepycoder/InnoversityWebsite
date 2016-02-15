@@ -13,6 +13,20 @@ if ($conn->connect_error) {
 
 $location = $_GET["l"];
 
+$sql = "SELECT * FROM locations WHERE name = '$location'";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+        $address = $row["adress"];
+        $faculty = $row["faculty"];
+        $freep = $row["pcap"] - $row["ppres"];
+        $freec = $row["ccap"] - $row["cpres"];
+        $percent1 = round(($row["ppres"] / $row["pcap"])*100,0);
+        $percent2 = round(($row["cpres"] / $row["ccap"])*100,0);
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,6 +55,9 @@ $location = $_GET["l"];
 
     <!-- Profile CSS -->
     <link href="css/detail.css" rel="stylesheet" type="text/css">
+
+    <!-- Circle CSS -->
+    <link rel="stylesheet" href="css/circle.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -104,30 +121,76 @@ $location = $_GET["l"];
                     <div class="col-lg-12">
                         <div class="well profile">
                             <div class="col-sm-12">
-                                <div class="col-xs-12 col-sm-8">
-                                    <h2><?php echo $location; ?></h2>
-                                    <br>
-                                    <p><strong>Address: </strong> Web Designer / UI. </p>
-                                    <p><strong>Hobbies: </strong> Read, out with friends, listen to music, draw and learn new things. </p>
-                                    <p><strong>Skills: </strong>
-                                        <span class="tags">html5</span>
-                                        <span class="tags">css3</span>
-                                        <span class="tags">jquery</span>
-                                        <span class="tags">bootstrap3</span>
-                                    </p>
-                                    <br>
+                                <h2><?php echo $location; ?></h2>
+                                <br>
+                                <p><strong>Address: </strong><?php echo $address; ?></p>
+                                <p><strong>Faculty: </strong><?php echo $faculty; ?></p>
+                                <p><strong>Features: </strong>
+                                    <span class="badge">WiFi</span>
+                                    <span class="badge">Drankautomaat</span>
+                                    <span class="badge">Snackautomaat</span>
+                                    <span class="badge">Waterkraantje</span>
+                                </p>
+                                <br>
+                            </div>
+                            <div class="col-xs-12 divider">
+                                <div class="col-xs-12 col-sm-4">
+                                    <div class="c100 p<?php echo $percent1; ?> big green center" align="center">
+                                        <span><?php echo $freep; ?><i class="fa fa-user fa-fw"></i></span>
+                                        <div class="slice">
+                                            <div class="bar"></div>
+                                            <div class="fill"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-4">
+                                    <div class="c100 p<?php echo $percent2; ?> big orange center" align="center">
+                                        <span><?php echo $freec; ?><i class="fa fa-desktop fa-fw"></i></span>
+                                        <div class="slice">
+                                            <div class="bar"></div>
+                                            <div class="fill"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-4">
+                                    <div class="c100 p72 big center">
+                                        <span>3.6<i class="fa fa-star fa-fw"></i></span>
+                                        <div class="slice">
+                                            <div class="bar"></div>
+                                            <div class="fill"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-xs-12 divider text-center">
-                                <div class="col-xs-12 col-sm-4 emphasis">
-                                    <h2><strong> 20,7K </strong></h2>
-                                    <p><small>Vrije Plaatsen</small></p>
-                                    <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Follow </button>
-                                </div>
-                                <div class="col-xs-12 col-sm-4 emphasis">
-                                    <h2><strong>245</strong></h2>
-                                    <p><small>Vrije Computers</small></p>
-                                    <button class="btn btn-info btn-block"><span class="fa fa-user"></span> View Profile </button>
+                            <div class="col-xs-12 divider">
+                            <!-- Nav tabs -->
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#home" data-toggle="tab" aria-expanded="true">Openingsuren</a>
+                                    </li>
+                                    <li class=""><a href="#profile" data-toggle="tab" aria-expanded="false">Foto's</a>
+                                    </li>
+                                    <li class=""><a href="#messages" data-toggle="tab" aria-expanded="false">Grondplan</a>
+                                    </li>
+                                </ul>
+
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div class="tab-pane fade active in" id="home">
+                                        <h4>Home Tab</h4>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                    </div>
+                                    <div class="tab-pane fade" id="profile">
+                                        <h4>Profile Tab</h4>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                    </div>
+                                    <div class="tab-pane fade" id="messages">
+                                        <h4>Messages Tab</h4>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                    </div>
+                                    <div class="tab-pane fade" id="settings">
+                                        <h4>Settings Tab</h4>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
