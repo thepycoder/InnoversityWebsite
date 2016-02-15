@@ -39,20 +39,20 @@ $location = $_GET["l"];
     <!-- Custom Fonts -->
     <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+    <!-- Profile CSS -->
+    <link href="css/detail.css" rel="stylesheet" type="text/css">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-
 </head>
 
 <body>
 
     <div id="wrapper">
-
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
@@ -102,37 +102,33 @@ $location = $_GET["l"];
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                      <h1><?php echo $location; ?></h1>
-                      <div class="card hovercard">
-                            <div class="cardheader">
-
-                            </div>
-                            <div class="avatar">
-                                <img alt="" src="http://lorempixel.com/100/100/people/9/">
-                            </div>
-                            <div class="info">
-                                <div class="title">
-                                    <a target="_blank" href="http://scripteden.com/">Script Eden</a>
+                        <div class="well profile">
+                            <div class="col-sm-12">
+                                <div class="col-xs-12 col-sm-8">
+                                    <h2><?php echo $location; ?></h2>
+                                    <br>
+                                    <p><strong>Address: </strong> Web Designer / UI. </p>
+                                    <p><strong>Hobbies: </strong> Read, out with friends, listen to music, draw and learn new things. </p>
+                                    <p><strong>Skills: </strong>
+                                        <span class="tags">html5</span>
+                                        <span class="tags">css3</span>
+                                        <span class="tags">jquery</span>
+                                        <span class="tags">bootstrap3</span>
+                                    </p>
+                                    <br>
                                 </div>
-                                <div class="desc">Passionate designer</div>
-                                <div class="desc">Curious developer</div>
-                                <div class="desc">Tech geek</div>
                             </div>
-                            <div class="bottom">
-                                <a class="btn btn-primary btn-twitter btn-sm" href="https://twitter.com/webmaniac">
-                                    <i class="fa fa-twitter"></i>
-                                </a>
-                                <a class="btn btn-danger btn-sm" rel="publisher"
-                                   href="https://plus.google.com/+ahmshahnuralam">
-                                    <i class="fa fa-google-plus"></i>
-                                </a>
-                                <a class="btn btn-primary btn-sm" rel="publisher"
-                                   href="https://plus.google.com/shahnuralam">
-                                    <i class="fa fa-facebook"></i>
-                                </a>
-                                <a class="btn btn-warning btn-sm" rel="publisher" href="https://plus.google.com/shahnuralam">
-                                    <i class="fa fa-behance"></i>
-                                </a>
+                            <div class="col-xs-12 divider text-center">
+                                <div class="col-xs-12 col-sm-4 emphasis">
+                                    <h2><strong> 20,7K </strong></h2>
+                                    <p><small>Vrije Plaatsen</small></p>
+                                    <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Follow </button>
+                                </div>
+                                <div class="col-xs-12 col-sm-4 emphasis">
+                                    <h2><strong>245</strong></h2>
+                                    <p><small>Vrije Computers</small></p>
+                                    <button class="btn btn-info btn-block"><span class="fa fa-user"></span> View Profile </button>
+                                </div>
                             </div>
                         </div>
                     </div>
