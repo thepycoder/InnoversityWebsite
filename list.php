@@ -39,7 +39,9 @@ if ($conn->connect_error) {
     <!-- Bootstrap theme for DT -->
     <link href="https://cdn.datatables.net/1.10.11/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--<link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" media="screen" title="no title" charset="utf-8">-->
+
+    <!-- HTML5 Shim and Respond5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -105,7 +107,7 @@ if ($conn->connect_error) {
                       <h1>List overview</h1>
                       <div class="panel panel-default">
                         <div class="panel-body">
-                          <table id="list" class="table table-striped table-bordered">
+                          <table id="list" class="table table-bordered hover">
                               <thead>
                                   <tr>
                                       <th>Name</th>
@@ -183,16 +185,21 @@ if ($conn->connect_error) {
     <!-- Initialise the datatable -->
     <script>
         $(document).ready(function() {
-            $('#list').DataTable();
-        } );
+          var otable = $('#list').dataTable();
+          $('#list tbody tr').click(function () {
+              // get position of the selected row
+              var position = otable.fnGetPosition(this);
+
+              // value of the first column (can be hidden)
+              var name = otable.fnGetData(position)[0];
+
+              // redirect
+              document.location.href = "detail.php?l=" + name;
+            });
+        });
     </script>
 
     <!-- Responsive table -->
-    <script>
-        $('#list').DataTable( {
-            responsive: true
-        } );
-    </script>
 
 </body>
 
