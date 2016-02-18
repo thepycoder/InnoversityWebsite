@@ -109,7 +109,7 @@ if ($conn->connect_error) {
                             <div class="col-lg-6">
                               <div class="form-group">
                                 <label>Common name of Location</label>
-                                <input class="form-control" placeholder="Common name">
+                                <input name="name" class="form-control" placeholder="Common name">
                                 <br>
                                 <label>Address</label>
                                 <input class="form-control" placeholder="Address">
