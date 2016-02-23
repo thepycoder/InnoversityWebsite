@@ -1,8 +1,14 @@
 <?php
 
-$servername = "mysql4.000webhost.com";
+/*$servername = "mysql4.000webhost.com";
 $username = "a9505441_bono";
-$password = "fiehair5";
-$dbname = "a9505441_inno";
+$password = "";
+$dbname = "a9505441_inno";*/
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "inno";
+
 
 ?>
