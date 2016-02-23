@@ -1,8 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "inno";
+include(config.php);
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -107,7 +104,7 @@ if ($conn->connect_error) {
                       <h1>List overview</h1>
                       <div class="panel panel-default">
                         <div class="panel-body">
-                          <table id="list" class="table table-bordered hover">
+                          <table id="list" class="table table-bordered table-hover">
                               <thead>
                                   <tr>
                                       <th>Name</th>

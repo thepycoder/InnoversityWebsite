@@ -1,8 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "inno";
+include(config.php);
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -35,6 +32,8 @@ if ($conn->connect_error) {
 
     <!-- Custom Fonts -->
     <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="css/custom.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -106,7 +105,7 @@ if ($conn->connect_error) {
                         </div>
                         <div class="panel-body">
                           <form role="form" action="process_form.php" method="post">
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                               <div class="form-group">
                                 <label>Common name of Location</label>
                                 <input name="name" class="form-control" placeholder="Common name">
@@ -127,7 +126,7 @@ if ($conn->connect_error) {
                                 <button type="reset" class="btn btn-default">Reset</button>
                               </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-5 text-center">
                               <div class="form-group">
                                 <label>Openingsuren</label>
                                 <br>
@@ -140,6 +139,27 @@ if ($conn->connect_error) {
                                   <div id="Saturday" class="day"></div>
                                   <div id="Sunday" class="day"></div>
                                 </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-3">
+                              <div class="form-group">
+                                <label>Features</label>
+                                <br>
+                                <p class="checkbox">
+                                  <input type="checkbox" id="inlineCheckbox1" value="option1"> EduRoam
+                                </p>
+                                <p class="checkbox">
+                                  <input type="checkbox" id="inlineCheckbox2" value="option2"> Drankautomaat
+                                </p>
+                                <p class="checkbox">
+                                  <input type="checkbox" id="inlineCheckbox3" value="option3"> Snackautomaat
+                                </p>
+                                <p class="checkbox">
+                                  <input type="checkbox" id="inlineCheckbox3" value="option3"> Printer
+                                </p>
+                                <p class="checkbox">
+                                  <input type="checkbox" id="inlineCheckbox3" value="option3"> Laptopvriendelijk
+                                </p>
                               </div>
                             </div>
                           </form>
@@ -172,7 +192,7 @@ if ($conn->connect_error) {
     <script type="text/javascript">
       $('.day').each(function() {
         var day = $(this).attr('id');
-        $(this).append('<div id="label">' + day + ': </div>');
+        $(this).append('<div id="label"><u>' + day + '</u>: </div>');
         $(this).append('<select name="' + day + 'FromH" class="hour from"></select>');
         $(this).append('<select name="' + day + 'FromM" class="min from"></select>');
         $(this).append('<select name="' + day + 'FromAP" class="ampm from"></select>');

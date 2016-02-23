@@ -1,8 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "inno";
+include(config.php);
 //victor is ne fag
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
