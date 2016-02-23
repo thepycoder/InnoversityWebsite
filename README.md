@@ -1,5 +1,5 @@
 TO - DO
 
-[] Realtime updates
-[] Mapview popups
-[] scanner link
+[ ] Realtime updates
+[ ] Mapview popups
+[ ] scanner link
