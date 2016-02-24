@@ -25,4 +25,6 @@ $sql = "UPDATE locations SET ppres = " . $new . " WHERE name = 'Bib Blandijn'";
 
 $conn->query($sql);
 
+
+echo "Success";
 ?>
