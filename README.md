@@ -2,4 +2,4 @@ TO - DO
 
 [ ] Realtime updates
 [ ] Mapview popups
-[ ] scanner link
+[x] scanner link
