@@ -115,7 +115,7 @@ if ($conn->connect_error) {
                                       $percent2 = round(($row["cpres"] / $row["ccap"])*100,0);
                                       echo '<a href="#" class="list-group-item">';
                                       echo '<p><strong>'.$row["name"].'</strong> <span class="badge"><i class="fa fa-star fa-fw"></i> 3.0</span></p>';
-                                      echo '<div class="progress progress-striped active"><div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="'.$percent1.'" aria-valuemin="0" aria-valuemax="100" style="width: '.$percent1.'%"><span class="show"><i class="fa fa-user fa-fw"></i>'.$row["ppres"].' / '.$row["pcap"].'</span></div></div>';
+                                      echo '<div class="progress progress-striped active"><div id="test" class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="'.$percent1.'" aria-valuemin="0" aria-valuemax="100" style="width: '.$percent1.'%"><span class="show"><i class="fa fa-user fa-fw"></i>'.$row["ppres"].' / '.$row["pcap"].'</span></div></div>';
                                       echo '<div class="progress progress-striped active"><div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="'.$percent2.'" aria-valuemin="0" aria-valuemax="100" style="width: '.$percent2.'%"><span class="show"><i class="fa fa-desktop fa-fw"></i>'.$row["cpres"].' / '.$row["ccap"].'</span></div></div>';
                                       echo '</a>';
                                   }
@@ -167,6 +167,31 @@ if ($conn->connect_error) {
 
     <!-- Custom Theme JavaScript -->
     <script src="dist/js/sb-admin-2.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            function updateProgress(ppres, pcap, percent) {
+                if (percent > 100) percent = 100;
+                $('#test').attr("style", 'width:' + percent + '%');
+                $('#test').attr("area-valuenow", percent);
+                $('#test').html('<span class="show"><i class="fa fa-user fa-fw"></i>' + ppres + ' / ' + pcap + '</span>');
+            }
+            function pollDB() {
+                $.ajax({
+                    type: 'GET',
+                    url: 'scanhelper.php',
+                    async: true,
+                    success: function(result){
+                        var data = JSON.parse(result);
+                        updateProgress(data.ppres, data.pcap, data.percent);
+                        console.log("test");
+                        setTimeout(pollDB(), 20000);
+                    },
+                })
+            }
+            pollDB();
+        });
+    </script>
 
 </body>
 
