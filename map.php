@@ -8,13 +8,15 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT adress FROM locations";
+$sql = "SELECT * FROM locations";
 $result = $conn->query($sql);
 $locations = "";
+$data = "";
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
-      $locations .= "'" . $row["adress"] . " Ghent Belgium'" . ",";
+      $locations .= "'" . $row["adress"] . " Ghent Belgium" . "',"; //quote still open
+      $data .= "'<b>" . $row["adress"] . "</b><br>" . "Free places: " . ($row["pcap"] - $row["ppres"]) . "<br>Computers: " . ($row["ccap"] - $row["cpres"]) . "',"; //quote ended
     }
 }
 
@@ -150,39 +152,61 @@ if ($result->num_rows > 0) {
 
     <!-- Custom Google Map -->
     <script>
+        
+        
+        
+        
     $(document).ready(function () {
       var map;
       var elevator;
+        
+        //aanmaken map met gekozen opties
       var myOptions = {
           zoom: 14,
           center: new google.maps.LatLng(51.056604, 3.719974),
           mapTypeId: 'terrain'
       };
+        
       map = new google.maps.Map($('#map_canvas')[0], myOptions);
+        
+        //functie om voor een marker een infowindow toe te voegen
+    function addInfoWindow(marker, message) {
 
+            console.log(message);
+
+            var infoWindow = new google.maps.InfoWindow({
+                content: message
+            });
+        
+            google.maps.event.addListener(marker, 'click', function () {
+                infoWindow.open(map, marker);
+            });
+        }
+
+
+        
+        //adressen importeren 
       var addresses = [<?php echo $locations; ?>];
-
-      for (var x = 0; x < addresses.length; x++) {
-          $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+addresses[x]+'&sensor=false', null, function (data) {
-              var p = data.results[0].geometry.location
+      var count = 0;
+      for (var x = 0; x < addresses.length; x++) 
+        {
+          console.log("blub: " + x);          
+          $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+addresses[x]+'&sensor=false', null, function (data) 
+            {
+              console.log(count);
+              var p = data.results[0].geometry.location;
               var latlng = new google.maps.LatLng(p.lat, p.lng);
               var marker = new google.maps.Marker({
                   position: latlng,
-                  map: map
-
-              });
-              var info = new google.maps.InfoWindow({
-                 content: addresses[x]
-              });
-
-              google.maps.event.addListener(marker, 'click ', function(){
-                                           marker.info.open(map,marker);
-              })
-
-          });
-      }
-
+                  map: map});
+              var data = [<?php echo $data; ?>];
+              //console.log(data[count]);
+              addInfoWindow(marker, data[count]);
+              count++;
+            });
+        }
     });
+                      
     </script>
 
     <script src="http://maps.google.com/maps/api/js?sensor=false&.js"></script>
